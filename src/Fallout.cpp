@@ -43,10 +43,11 @@ int main(){
 	int length=0;
 	string p="";
 	int i=1;
-	while(p!="done"){ //While user has not entered "done" when prompted for passwords
+	do{
 		cout << i << ": ";
 		cin >> p;
-		if(length==0) length = p.size(); //If the password length hasnot been determined, set it to the length of the first password the user enters.
+		if(!cin.good()) exit(0);
+		if(length==0) length = p.size(); //If the password length has not been determined, set it to the length of the first password the user enters.
 		if(p.size()==length){
 			pass.insert(p);
 			i++;
@@ -56,15 +57,15 @@ int main(){
 			cout << "Please retype password " << i << ":" << endl;
 			continue;
 		}
-	}
+	}while(p!="done" && cin.good()); //While user has not entered "done" when prompted for passwords
 	cout << "Passwords loaded: " << i-1 << endl;
 	print_diff(length);
-	while(pass.size()>1){
+	while(cin.good() && pass.size()>1){
 		cout << ">"; //Fallout-esque password prompt
 		string tried;
 		int cor;
 		cin >> tried;
-		while(pass.find(tried)==pass.end()){ //Prompt user to reenter password if entered password does not exist in list of passwords
+		while(cin.good() && pass.find(tried)==pass.end()){ //Prompt user to reenter password if entered password does not exist in list of passwords
 			cout << "Please retype password:" << endl << ">";
 			cin >> tried;
 		}
@@ -78,6 +79,7 @@ int main(){
 		}
 		if(pass.size()==1){ //If there is only one candidate left, print it and exit.
 			cout << ">" << *(pass.begin()) << endl;
+			cout << "Access granted." << endl;
 		}
 		else if(pass.size()!=0){ //If there is still candidates to be considered, print them.
 			cout << "Possible matches:" << endl;
@@ -87,5 +89,4 @@ int main(){
 			cout << endl;
 		}
 	}
-	cout << "Access granted." << endl;
 }
