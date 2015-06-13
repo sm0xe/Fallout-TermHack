@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void success(){
+void exact_match(){
 	cout << ">Exact match!" << endl;
 	cout << ">Please wait" << endl;
 	cout << ">while system" << endl;
@@ -91,6 +91,7 @@ int main(){
 		pass.erase(tried); //Remove entered password from list of candidates
 		cout << "> /" << length <<" correct.\r>"; //Prompt user for number of correct characters.
 		cin >> cor;
+		if(cor==length) exact_match();
 		for(set<string>::iterator j=pass.begin(); j!=pass.end(); j++){
 			if(cor!=correct(tried,(*j))){ //Remove all candidates that do not have the same amount of correct characters as the tried password.
 				pass.erase(*j);
@@ -98,7 +99,7 @@ int main(){
 		}
 		if(pass.size()==1){ //If there is only one candidate left, print it and exit.
 			cout << ">" << *(pass.begin()) << endl;
-			success();
+			exact_match();
 		}
 		else if(pass.size()!=0){ //If there is still candidates to be considered, print them.
 			cout << "Possible matches:" << endl;
@@ -108,5 +109,4 @@ int main(){
 			cout << endl;
 		}
 	}
-	if(pass.size()==0) success();
 }
