@@ -89,4 +89,7 @@ int main(){
 			cout << endl;
 		}
 	}
+	if(pass.size()==0){
+		cout << "Access granted." << endl;
+	}
 }
