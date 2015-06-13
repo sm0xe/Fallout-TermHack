@@ -1,9 +1,17 @@
 #include <iostream>
 #include <string>
 #include <set>
+#include <unistd.h>
 
 using namespace std;
 
+void success(){
+	cout << ">Exact match!" << endl;
+	cout << ">Please wait" << endl;
+	cout << ">while system" << endl;
+	cout << ">is accessed." << endl;
+	sleep(3);
+}
 void print_diff(int l){
 	cout << "Difficulty: ";
 	switch(l){
@@ -79,7 +87,7 @@ int main(){
 		}
 		if(pass.size()==1){ //If there is only one candidate left, print it and exit.
 			cout << ">" << *(pass.begin()) << endl;
-			cout << "Access granted." << endl;
+			success();
 		}
 		else if(pass.size()!=0){ //If there is still candidates to be considered, print them.
 			cout << "Possible matches:" << endl;
@@ -89,7 +97,5 @@ int main(){
 			cout << endl;
 		}
 	}
-	if(pass.size()==0){
-		cout << "Access granted." << endl;
-	}
+	if(pass.size()==0) success();
 }
