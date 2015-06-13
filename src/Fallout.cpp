@@ -39,6 +39,9 @@ void print_diff(int l){
 			break;
 	}
 }
+void clear(){
+	cout << "\e\r                         \r";
+}
 int correct(string a, string b){ //Count correct characters
 	int count=0;
 	for(int i=0; i<a.size(); i++){
@@ -56,25 +59,33 @@ int main(){
 		cin >> p;
 		if(!cin.good()) exit(0);
 		if(length==0) length = p.size(); //If the password length has not been determined, set it to the length of the first password the user enters.
-		if(p.size()==length){
+		if(p=="done"){ //Exit loop if the entered "password" is "done"
+			cout << "\e[A\r                    \r";
+			break;
+		}
+		else if(p.size()==length){
 			pass.insert(p);
 			i++;
 		}
-		else if(p!="done"){ //If the user enters an invalid password (wrong length), and the entered password is not "done"...
-			//...prompt user to reenter the password.
-			cout << "Please retype password " << i << ":" << endl;
-			continue;
-		}
+		cout << "\e[A\r                    \r";
 	}while(p!="done" && cin.good()); //While user has not entered "done" when prompted for passwords
 	cout << "Passwords loaded: " << i-1 << endl;
 	print_diff(length);
+	sleep(1);
+	clear();
+	cout << "\e[A";
+	clear();
+	cout << "\e[A";
+	clear();
 	while(cin.good() && pass.size()>1){
 		cout << ">"; //Fallout-esque password prompt
 		string tried;
 		int cor;
 		cin >> tried;
 		while(cin.good() && pass.find(tried)==pass.end()){ //Prompt user to reenter password if entered password does not exist in list of passwords
-			cout << "Please retype password:" << endl << ">";
+			cout << "\e[A";
+			clear();
+			cout << ">";
 			cin >> tried;
 		}
 		pass.erase(tried); //Remove entered password from list of candidates
