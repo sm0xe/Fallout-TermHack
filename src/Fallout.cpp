@@ -2,9 +2,16 @@
 #include <string>
 #include <set>
 #include <unistd.h>
+#include <algorithm>
+#include <locale>
 
 using namespace std;
 
+void toUpper(string &s){
+	for(int i=0; i<s.size(); i++){
+		s.at(i) = toupper(s.at(i));
+	}
+}
 void exact_match(){
 	cout << ">Exact match!" << endl;
 	cout << ">Please wait" << endl;
@@ -57,9 +64,10 @@ int main(){
 	do{
 		cout << i << ": ";
 		cin >> p;
+		toUpper(p);
 		if(!cin.good()) exit(0);
 		if(length==0) length = p.size(); //If the password length has not been determined, set it to the length of the first password the user enters.
-		if(p=="done"){ //Exit loop if the entered "password" is "done"
+		if(p=="DONE"){ //Exit loop if the entered "password" is "done"
 			cout << "\e[A\r                    \r";
 			break;
 		}
@@ -68,7 +76,7 @@ int main(){
 			i++;
 		}
 		cout << "\e[A\r                    \r";
-	}while(p!="done" && cin.good()); //While user has not entered "done" when prompted for passwords
+	}while(p!="DONE" && cin.good()); //While user has not entered "done" when prompted for passwords
 	cout << "Passwords loaded: " << i-1 << endl;
 	print_diff(length);
 	sleep(1);
@@ -82,12 +90,8 @@ int main(){
 		string tried;
 		int cor;
 		cin >> tried;
-		while(cin.good() && pass.find(tried)==pass.end()){ //Prompt user to reenter password if entered password does not exist in list of passwords
-			cout << "\e[A";
-			clear();
-			cout << ">";
-			cin >> tried;
-		}
+		toUpper(tried);
+		cout << "\e[A\r>" << tried << endl;
 		pass.erase(tried); //Remove entered password from list of candidates
 		cout << ">Entry denied" << endl;
 		cout << "> /" << length <<" correct.\r>"; //Prompt user for number of correct characters.
