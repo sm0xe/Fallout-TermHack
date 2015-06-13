@@ -107,6 +107,12 @@ int main(){
 				cout << (*j) << " ";
 			}
 			cout << endl;
+			sleep(3);
+			clear();
+			cout << "\e[A";
+			clear();
+			cout << "\e[A";
+			clear();
 		}
 	}
 }
