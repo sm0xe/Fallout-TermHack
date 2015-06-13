@@ -89,9 +89,14 @@ int main(){
 			cin >> tried;
 		}
 		pass.erase(tried); //Remove entered password from list of candidates
+		cout << ">Entry denied" << endl;
 		cout << "> /" << length <<" correct.\r>"; //Prompt user for number of correct characters.
 		cin >> cor;
-		if(cor==length) exact_match();
+		if(cor==length){
+			cout << "\e[A";
+			clear();
+			exact_match();
+		}
 		for(set<string>::iterator j=pass.begin(); j!=pass.end(); j++){
 			if(cor!=correct(tried,(*j))){ //Remove all candidates that do not have the same amount of correct characters as the tried password.
 				pass.erase(*j);
