@@ -47,7 +47,11 @@ void print_diff(int l){
 	}
 }
 void clear(){
-	cout << "\e\r                         \r";
+	cout << "\r";
+	for(int i=0; i<50; i++){
+		cout << " ";
+	}
+	cout << "\r";
 }
 int correct(string a, string b){ //Count correct characters
 	int count=0;
